@@ -1,0 +1,76 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "csv_to_sql",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "CSV_ADLS_ZAKHARIA",
+						"type": "DatasetReference",
+						"parameters": {
+							"containar_name": "development",
+							"folder_name": "File_Dev",
+							"delimeter_name": ",",
+							"row_as_header": true,
+							"file_name": "CustomerOrders.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_Zakharia",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "dbo",
+							"table_name": "CustomerOrders"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "example"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-07-12T06:33:43Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "rdfzakharia",
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8ebb6802-6548-4cc0-aac3-4ca184a52a14",
+		"tenantId": "e522de87-3b5f-4914-b700-3ee0ac8e7497"
+	}
+}
