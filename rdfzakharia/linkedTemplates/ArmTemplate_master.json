@@ -1,0 +1,112 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "rdfzakharia"
+		},
+		"ADLS_Zakharia_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS_Zakharia'"
+		},
+		"SQLLOCALDESKTOPIEQL49O_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQLLOCALDESKTOPIEQL49O'"
+		},
+		"SQL_Zakharia_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQL_Zakharia'"
+		},
+		"ADLS_Zakharia_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageacczakharia.dfs.core.windows.net/"
+		},
+		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "DESKTOP-IEQL49O"
+		},
+		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdventureWorks2022"
+		},
+		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
+		},
+		"SQL_Zakharia_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "zakharia.database.windows.net"
+		},
+		"SQL_Zakharia_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"SQL_Zakharia_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin_zakharia"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "rdfzakharia_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ADLS_Zakharia_accountKey": {
+						"value": "[parameters('ADLS_Zakharia_accountKey')]"
+					},
+					"SQL_Zakharia_password": {
+						"value": "[parameters('SQL_Zakharia_password')]"
+					},
+					"SQLLOCALDESKTOPIEQL49O_password": {
+						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_password')]"
+					},
+					"ADLS_Zakharia_properties_typeProperties_url": {
+						"value": "[parameters('ADLS_Zakharia_properties_typeProperties_url')]"
+					},
+					"SQL_Zakharia_properties_typeProperties_server": {
+						"value": "[parameters('SQL_Zakharia_properties_typeProperties_server')]"
+					},
+					"SQL_Zakharia_properties_typeProperties_database": {
+						"value": "[parameters('SQL_Zakharia_properties_typeProperties_database')]"
+					},
+					"SQL_Zakharia_properties_typeProperties_userName": {
+						"value": "[parameters('SQL_Zakharia_properties_typeProperties_userName')]"
+					},
+					"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server": {
+						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server')]"
+					},
+					"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_database": {
+						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_database')]"
+					},
+					"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_userName": {
+						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

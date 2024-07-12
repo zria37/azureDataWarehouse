@@ -1,0 +1,422 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "rdfzakharia"
+		},
+		"ADLS_Zakharia_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS_Zakharia'"
+		},
+		"SQLLOCALDESKTOPIEQL49O_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQLLOCALDESKTOPIEQL49O'"
+		},
+		"SQL_Zakharia_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQL_Zakharia'"
+		},
+		"ADLS_Zakharia_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageacczakharia.dfs.core.windows.net/"
+		},
+		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "DESKTOP-IEQL49O"
+		},
+		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdventureWorks2022"
+		},
+		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
+		},
+		"SQL_Zakharia_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "zakharia.database.windows.net"
+		},
+		"SQL_Zakharia_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"SQL_Zakharia_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin_zakharia"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "csv_to_sql",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_ADLS_ZAKHARIA",
+								"type": "DatasetReference",
+								"parameters": {
+									"containar_name": "development",
+									"folder_name": "File_Dev",
+									"delimeter_name": ",",
+									"row_as_header": true,
+									"file_name": "CustomerOrders.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQL_Zakharia",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema_name": "dbo",
+									"table_name": "CustomerOrders"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "example"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-07-12T06:33:43Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/CSV_ADLS_ZAKHARIA')]",
+				"[concat(variables('factoryId'), '/datasets/SQL_Zakharia')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CSV_ADLS_ZAKHARIA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Zakharia",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"containar_name": {
+						"type": "string",
+						"defaultValue": "development"
+					},
+					"folder_name": {
+						"type": "string"
+					},
+					"delimeter_name": {
+						"type": "string",
+						"defaultValue": ","
+					},
+					"row_as_header": {
+						"type": "bool",
+						"defaultValue": true
+					},
+					"file_name": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "ADLS"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file_name",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folder_name",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().containar_name",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": {
+						"value": "@dataset().delimeter_name",
+						"type": "Expression"
+					},
+					"escapeChar": "\\",
+					"firstRowAsHeader": {
+						"value": "@dataset().row_as_header",
+						"type": "Expression"
+					},
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS_Zakharia')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_DESKTOPIEQL49O')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLLOCALDESKTOPIEQL49O",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schema_database": {
+						"type": "string"
+					},
+					"table_database": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema_database",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().table_database",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SQLLOCALDESKTOPIEQL49O')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Zakharia')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQL_Zakharia",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schema_name": {
+						"type": "string"
+					},
+					"table_name": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "ADLS"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "CustomerKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MaritalStatus",
+						"type": "char"
+					},
+					{
+						"name": "Gender",
+						"type": "char"
+					},
+					{
+						"name": "YearlyIncome",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "Education",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Occupation",
+						"type": "nvarchar"
+					},
+					{
+						"name": "City",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StateProvince",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NumberOfOrders",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TotalQuantity",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TotalAmount",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					}
+				],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema_name",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().table_name",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SQL_Zakharia')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ADLS_Zakharia')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('ADLS_Zakharia_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('ADLS_Zakharia_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQLLOCALDESKTOPIEQL49O')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Untuk menghubungkan local database ke Linked Services",
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server')]",
+					"database": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "localzakharia",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/localzakharia')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Zakharia')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('SQL_Zakharia_properties_typeProperties_server')]",
+					"database": "[parameters('SQL_Zakharia_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('SQL_Zakharia_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SQL_Zakharia_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/localzakharia')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		}
+	]
+}
