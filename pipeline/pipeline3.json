@@ -263,7 +263,7 @@
 						"type": "SqlServerSource",
 						"additionalColumns": [
 							{
-								"name": "insertedDate",
+								"name": "InsertedDate",
 								"value": {
 									"value": "@utcnow()",
 									"type": "Expression"
@@ -282,7 +282,13 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
-						"writeBehavior": "insert",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"CustomerID"
+							]
+						},
 						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
