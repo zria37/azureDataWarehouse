@@ -14,8 +14,17 @@
 		"SQL_Zakharia_password": {
 			"value": ""
 		},
+		"HanifStorage_Account_accountKey": {
+			"value": ""
+		},
+		"SQL_Hanif_password": {
+			"value": ""
+		},
 		"ADLS_Zakharia_properties_typeProperties_url": {
 			"value": "https://storageacczakharia.dfs.core.windows.net/"
+		},
+		"HTTP_Solliancepublicdata_Customer_properties_typeProperties_url": {
+			"value": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
 		},
 		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server": {
 			"value": "DESKTOP-IEQL49O"
@@ -34,6 +43,18 @@
 		},
 		"SQL_Zakharia_properties_typeProperties_userName": {
 			"value": "admin_zakharia"
+		},
+		"HanifStorage_Account_properties_typeProperties_url": {
+			"value": "https://hanifstorageaccount.dfs.core.windows.net/"
+		},
+		"SQL_Hanif_properties_typeProperties_server": {
+			"value": "mhaniffajari.database.windows.net"
+		},
+		"SQL_Hanif_properties_typeProperties_database": {
+			"value": "data"
+		},
+		"SQL_Hanif_properties_typeProperties_userName": {
+			"value": "admin_sa"
 		},
 		"containerUri": {
 			"value": ""

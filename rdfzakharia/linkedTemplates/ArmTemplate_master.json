@@ -19,9 +19,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SQL_Zakharia'"
 		},
+		"HanifStorage_Account_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'HanifStorage_Account'"
+		},
+		"SQL_Hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQL_Hanif'"
+		},
 		"ADLS_Zakharia_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageacczakharia.dfs.core.windows.net/"
+		},
+		"HTTP_Solliancepublicdata_Customer_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
 		},
 		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server": {
 			"type": "string",
@@ -46,6 +58,22 @@
 		"SQL_Zakharia_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "admin_zakharia"
+		},
+		"HanifStorage_Account_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://hanifstorageaccount.dfs.core.windows.net/"
+		},
+		"SQL_Hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "mhaniffajari.database.windows.net"
+		},
+		"SQL_Hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"SQL_Hanif_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin_sa"
 		},
 		"containerUri": {
 			"type": "string",
@@ -80,11 +108,20 @@
 					"SQL_Zakharia_password": {
 						"value": "[parameters('SQL_Zakharia_password')]"
 					},
+					"HanifStorage_Account_accountKey": {
+						"value": "[parameters('HanifStorage_Account_accountKey')]"
+					},
+					"SQL_Hanif_password": {
+						"value": "[parameters('SQL_Hanif_password')]"
+					},
 					"SQLLOCALDESKTOPIEQL49O_password": {
 						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_password')]"
 					},
 					"ADLS_Zakharia_properties_typeProperties_url": {
 						"value": "[parameters('ADLS_Zakharia_properties_typeProperties_url')]"
+					},
+					"HTTP_Solliancepublicdata_Customer_properties_typeProperties_url": {
+						"value": "[parameters('HTTP_Solliancepublicdata_Customer_properties_typeProperties_url')]"
 					},
 					"SQL_Zakharia_properties_typeProperties_server": {
 						"value": "[parameters('SQL_Zakharia_properties_typeProperties_server')]"
@@ -94,6 +131,18 @@
 					},
 					"SQL_Zakharia_properties_typeProperties_userName": {
 						"value": "[parameters('SQL_Zakharia_properties_typeProperties_userName')]"
+					},
+					"HanifStorage_Account_properties_typeProperties_url": {
+						"value": "[parameters('HanifStorage_Account_properties_typeProperties_url')]"
+					},
+					"SQL_Hanif_properties_typeProperties_server": {
+						"value": "[parameters('SQL_Hanif_properties_typeProperties_server')]"
+					},
+					"SQL_Hanif_properties_typeProperties_database": {
+						"value": "[parameters('SQL_Hanif_properties_typeProperties_database')]"
+					},
+					"SQL_Hanif_properties_typeProperties_userName": {
+						"value": "[parameters('SQL_Hanif_properties_typeProperties_userName')]"
 					},
 					"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server": {
 						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server')]"
@@ -107,6 +156,26 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "rdfzakharia_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'rdfzakharia_ArmTemplate_0')]"
+			]
 		}
 	]
 }
