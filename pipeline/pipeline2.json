@@ -1,0 +1,60 @@
+{
+	"name": "pipeline2",
+	"properties": {
+		"activities": [
+			{
+				"name": "HTTP TO ADLS",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "BINARY_HTTP_solliancepublicdata_Customer",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "BINARY_ADLS_HTTP_solliancepublicdata_Customer",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "development",
+							"folder_name": "HTTPS",
+							"file_name": "Customer_Source.csv"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "Practice_Case"
+		},
+		"annotations": []
+	}
+}
