@@ -8,6 +8,10 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@variables('file_name')",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "Copy data1",
