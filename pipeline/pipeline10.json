@@ -108,13 +108,7 @@
 								},
 								"sink": {
 									"type": "SqlServerSink",
-									"writeBehavior": "upsert",
-									"upsertSettings": {
-										"useTempDB": true,
-										"keys": [
-											"image_name"
-										]
-									},
+									"writeBehavior": "insert",
 									"sqlWriterUseTableLock": false
 								},
 								"enableStaging": false

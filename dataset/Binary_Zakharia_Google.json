@@ -1,0 +1,42 @@
+{
+	"name": "Binary_Zakharia_Google",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_Zakharia",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"countainer_name": {
+				"type": "string"
+			},
+			"folder_name": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "practice Day 5"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folder_name",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().countainer_name",
+					"type": "Expression"
+				}
+			}
+		}
+	}
+}
