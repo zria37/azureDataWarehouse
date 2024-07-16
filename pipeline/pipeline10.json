@@ -75,7 +75,13 @@
 						]
 					}
 				],
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@split(replace(activity('Lookup_Data-SQL_Hanif').output.firstRow.concatenated_files, '\\', ''), ',')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"folder": {
