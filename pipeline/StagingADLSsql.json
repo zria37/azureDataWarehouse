@@ -90,8 +90,6 @@
 			{
 				"name": "MySQL to SQL Orders",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ADLS Staging Orders",
