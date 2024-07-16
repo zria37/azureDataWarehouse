@@ -13,7 +13,23 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT \n    STRING_AGG(file_name,',') AS concatenated_files\nFROM image_name;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SqlServer_hanif_GCP",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": ".",
+							"table_name": "."
+						}
+					}
+				}
 			}
 		],
 		"folder": {
