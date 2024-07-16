@@ -1,0 +1,27 @@
+{
+	"name": "pipeline11",
+	"properties": {
+		"activities": [
+			{
+				"name": "staging_ADLS_application",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			}
+		],
+		"folder": {
+			"name": "Practice Day 5"
+		},
+		"annotations": []
+	}
+}
