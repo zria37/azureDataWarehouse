@@ -15,8 +15,236 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "PostgreSqlV2Source"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PostgreSql_hanif_adls",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "public",
+							"table_name": "application"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_ZAKHARIA",
+						"type": "DatasetReference",
+						"parameters": {
+							"containar_name": "development",
+							"folder_name": "postgreeSQL",
+							"delimeter_name": ",",
+							"row_as_header": true,
+							"file_name": "application.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "staging_ADLS_bureau",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlV2Source"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PostgreSql_hanif_adls",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "public",
+							"table_name": "bureau"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_ZAKHARIA",
+						"type": "DatasetReference",
+						"parameters": {
+							"containar_name": "development",
+							"folder_name": "postgreeSQL",
+							"delimeter_name": ",",
+							"row_as_header": true,
+							"file_name": "bureau.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "staging_ADLS_installment",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlV2Source"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PostgreSql_hanif_adls",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "public",
+							"table_name": "installment"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_ZAKHARIA",
+						"type": "DatasetReference",
+						"parameters": {
+							"containar_name": "development",
+							"folder_name": "postgreeSQL",
+							"delimeter_name": ",",
+							"row_as_header": true,
+							"file_name": "installment.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "staging_ADLS_previous_application",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlV2Source"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PostgreSql_hanif_adls",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "public",
+							"table_name": "previous_application"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_ZAKHARIA",
+						"type": "DatasetReference",
+						"parameters": {
+							"containar_name": "development",
+							"folder_name": "postgreeSQL",
+							"delimeter_name": ",",
+							"row_as_header": true,
+							"file_name": "previous_application.csv"
+						}
+					}
+				]
 			}
 		],
 		"folder": {
