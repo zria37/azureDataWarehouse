@@ -99,7 +99,8 @@
 									"type": "BinarySource",
 									"storeSettings": {
 										"type": "GoogleCloudStorageReadSettings",
-										"recursive": true
+										"recursive": true,
+										"deleteFilesAfterCompletion": false
 									},
 									"formatSettings": {
 										"type": "BinaryReadSettings"
