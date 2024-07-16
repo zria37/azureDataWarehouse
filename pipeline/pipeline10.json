@@ -168,7 +168,7 @@
 									{
 										"type": "Query",
 										"text": {
-											"value": "@concat('INSERT INTO dbo.list_image (image_name, url_name, ingest_tme) VALUES (''', item(), ''', ''https://hanifstorageaccount.blob.core.windows.net/hanifcontainers/image/', item(), '.png'', GETDATE());')\n",
+											"value": "@concat('INSERT INTO dbo.list_image (image_name, url_name, provider) VALUES (''', item(), ''', ''https://hanifstorageaccount.blob.core.windows.net/hanifcontainers/image/', item(), '.png'', GETDATE());')\n",
 											"type": "Expression"
 										}
 									}
@@ -204,7 +204,7 @@
 									{
 										"type": "Query",
 										"text": {
-											"value": "@concat('INSERT INTO dbo.image_log (image_name, image_url, ingest_tme) VALUES (''', item(), ''', ''https://hanifstorageaccount.blob.core.windows.net/hanifcontainers/image/', item(), ''', ''failed'', GETDATE());')\n",
+											"value": "@concat('INSERT INTO dbo.image_log (image_name, image_url, provider) VALUES (''', item(), ''', ''https://hanifstorageaccount.blob.core.windows.net/hanifcontainers/image/', item(), ''', ''failed'', GETDATE());')\n",
 											"type": "Expression"
 										}
 									}
