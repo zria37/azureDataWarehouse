@@ -5,8 +5,6 @@
 			{
 				"name": "MySQL to SQL Server Customers",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ADLS Staging Customers",
@@ -158,7 +156,10 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"containar_name": "development",
-							"folder_name": "@concat('data/customer/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+							"folder_name": {
+								"value": "@concat('data/orders/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
 							"delimeter_name": ",",
 							"row_as_header": true,
 							"file_name": "orders_csv.csv"
@@ -179,9 +180,14 @@
 			{
 				"name": "MySQL to SQL Orders Items",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ADLS Staging Orders Details",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -192,7 +198,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "MySqlSource",
+						"type": "DelimitedTextSource",
 						"additionalColumns": [
 							{
 								"name": "ingest_time",
@@ -201,7 +207,15 @@
 									"type": "Expression"
 								}
 							}
-						]
+						],
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
 					"sink": {
 						"type": "SqlServerSink",
@@ -227,10 +241,17 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "MySql_Hanif_DataSets",
+						"referenceName": "CSV_ADLS_ZAKHARIA",
 						"type": "DatasetReference",
 						"parameters": {
-							"table_name": "order_items"
+							"containar_name": "development",
+							"folder_name": {
+								"value": "@concat('data/orders_items/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
+							"delimeter_name": ",",
+							"row_as_header": true,
+							"file_name": "ordersItems_csv.csv"
 						}
 					}
 				],
@@ -248,8 +269,6 @@
 			{
 				"name": "fact_customer_rfm",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "MySQL to SQL Server Customers",
@@ -331,8 +350,6 @@
 			{
 				"name": "ADLS Staging Customers",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -452,6 +469,69 @@
 							"delimeter_name": ",",
 							"row_as_header": true,
 							"file_name": "orders_csv.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "ADLS Staging Orders Details",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "MySqlSource"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "MySql_Hanif_DataSets",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": "order_items"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_ZAKHARIA",
+						"type": "DatasetReference",
+						"parameters": {
+							"containar_name": "development",
+							"folder_name": {
+								"value": "@concat('data/orders_items/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
+							"delimeter_name": ",",
+							"row_as_header": true,
+							"file_name": "ordersItems_csv.csv"
 						}
 					}
 				]
