@@ -1,0 +1,24 @@
+{
+	"name": "pipeline10",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup_Data-SQL_Hanif",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			}
+		],
+		"folder": {
+			"name": "Practice Day 5"
+		},
+		"annotations": []
+	}
+}

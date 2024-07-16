@@ -1,5 +1,5 @@
 {
-	"name": "Binary1",
+	"name": "Binary_Hanif_GCO",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "GoogleCloudStorage_Hanif",

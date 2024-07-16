@@ -1,5 +1,5 @@
 {
-	"name": "SqlServerTable1",
+	"name": "SqlServer_hanif_GCP",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "SqlServer_GCP_Hanif",
