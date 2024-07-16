@@ -107,9 +107,10 @@
 									}
 								},
 								"sink": {
-									"type": "SqlServerSink",
-									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
 								},
 								"enableStaging": false
 							},
@@ -121,7 +122,7 @@
 										"bucket_Name": "azure_data_engineer",
 										"directory_name": "image",
 										"file_name": {
-											"value": "@item()",
+											"value": "@concat(item(),'.png')",
 											"type": "Expression"
 										}
 									}
@@ -129,14 +130,87 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "SQL_Zakharia",
+									"referenceName": "Binary_Zakharia_Google",
 									"type": "DatasetReference",
 									"parameters": {
-										"schema_name": "dbo",
-										"table_name": "list_image"
+										"countainer_name": "development",
+										"folder_name": "case_five",
+										"file_name": "@concat(item(),'.png')"
 									}
 								}
 							]
+						},
+						{
+							"name": "success",
+							"type": "Script",
+							"dependsOn": [
+								{
+									"activity": "GCP TO SQL",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "SQL_Zakharia",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "@concat('INSERT INTO dbo.list_image (image_name, url_name, ingest_tme) VALUES (''', item(), ''', ''https://hanifstorageaccount.blob.core.windows.net/hanifcontainers/image/', item(), '.png'', GETDATE());')\n",
+											"type": "Expression"
+										}
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
+						},
+						{
+							"name": "failed",
+							"type": "Script",
+							"dependsOn": [
+								{
+									"activity": "GCP TO SQL",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "SQL_Zakharia",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "@concat('INSERT INTO dbo.image_log (image_name, image_url, ingest_tme) VALUES (''', item(), ''', ''https://hanifstorageaccount.blob.core.windows.net/hanifcontainers/image/', item(), ''', ''failed'', GETDATE());')\n",
+											"type": "Expression"
+										}
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
 						}
 					]
 				}
