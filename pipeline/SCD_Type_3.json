@@ -23,7 +23,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Extract ",
+						"activity": "Extract",
 						"dependencyConditions": [
 							"Succeeded"
 						]
