@@ -19,7 +19,7 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "SCD Type 2",
 				"type": "Copy",
 				"dependsOn": [
 					{
