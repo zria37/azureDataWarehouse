@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "SCD 3",
+				"name": "SCD Type 1",
 				"type": "Copy",
 				"dependsOn": [
 					{
