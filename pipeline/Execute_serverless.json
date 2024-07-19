@@ -1,39 +1,6 @@
 {
 	"name": "Execute_serverless",
 	"properties": {
-		"activities": [
-			{
-				"name": "Exect SP Employee",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "SqlServer_Synepss_serverless_Celerates",
-						"type": "DatasetReference",
-						"parameters": {
-							"schema_name": ".",
-							"table_name": "."
-						}
-					}
-				]
-			}
-		],
 		"folder": {
 			"name": "Serverless"
 		},
