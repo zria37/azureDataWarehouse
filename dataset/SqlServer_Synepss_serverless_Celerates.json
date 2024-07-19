@@ -1,0 +1,12 @@
+{
+	"name": "SqlServer_Synepss_serverless_Celerates",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer_Synapse_Celerates",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	}
+}
