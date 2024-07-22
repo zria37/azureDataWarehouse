@@ -1,0 +1,92 @@
+{
+	"name": "Soal_Satu",
+	"properties": {
+		"activities": [
+			{
+				"name": "Row MongoDB",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "MongoDbV2Source",
+						"batchSize": 100
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "MongoDB_Hanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"collection_name": "documents"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "JSON_ADLS_Zakharia",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "development",
+							"folder_name": {
+								"value": "@concat('raw/json/', formatDateTime(utcnow(), 'yyyyMMdd'))",
+								"type": "Expression"
+							},
+							"file_name": "MongoDB_Hanif.json"
+						}
+					}
+				]
+			},
+			{
+				"name": "Transforms JSON to",
+				"type": "DatabricksNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "Row MongoDB",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/kelompok2@celeratesschooloutlook.onmicrosoft.com/zakharia/ChallangeSembilan/Challange_Sembilan"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_Zakharia_Kelompok_2",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Challenge 9"
+		},
+		"annotations": []
+	}
+}
