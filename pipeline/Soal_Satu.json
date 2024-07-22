@@ -46,7 +46,7 @@
 						"parameters": {
 							"container_name": "development",
 							"folder_name": {
-								"value": "@concat('raw/json', formatDateTime(utcnow(), 'yyyyMMdd'))",
+								"value": "@concat('/challangeSembilan/raw/json/', formatDateTime(utcnow(), 'yyyyMMdd'))",
 								"type": "Expression"
 							},
 							"file_name": "MongoDB_Hanif.json"
