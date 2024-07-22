@@ -1,0 +1,13 @@
+{
+	"name": "Http_Soal_Dua_Challange_Sembilan",
+	"properties": {
+		"description": "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-01.parquet\nhttps://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page",
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://d37ci6vzurychx.cloudfront.net/",
+			"enableServerCertificateValidation": false,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
