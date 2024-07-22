@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Extract File dari Web",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -15,24 +15,8 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "BinarySource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true
-						},
-						"formatSettings": {
-							"type": "BinaryReadSettings"
-						}
-					},
 					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "BINARY_ADLS_HTTP_solliancepublicdata_Customer",
-						"type": "DatasetReference"
-					}
-				]
+				}
 			}
 		],
 		"folder": {
