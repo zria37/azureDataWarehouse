@@ -1,9 +1,0 @@
-{
-	"name": "Execute_serverless",
-	"properties": {
-		"folder": {
-			"name": "Serverless"
-		},
-		"annotations": []
-	}
-}
