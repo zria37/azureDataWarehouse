@@ -6,6 +6,38 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "rdfzakharia"
+		},
+		"SQLLOCALDESKTOPIEQL49O_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQLLOCALDESKTOPIEQL49O'"
+		},
+		"SqlServer_Local__password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServer_Local_'"
+		},
+		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "DESKTOP-IEQL49O"
+		},
+		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdventureWorks2022"
+		},
+		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
+		},
+		"SqlServer_Local__properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "DESKTOP-IEQL49O"
+		},
+		"SqlServer_Local__properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "HR_DB"
+		},
+		"SqlServer_Local__properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
 		}
 	},
 	"variables": {
@@ -13,112 +45,627 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline6')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/CSV_ADLS_ZAKHARIA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@variables('file_name')",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Transfers ADLS",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "JsonSource",
-											"storeSettings": {
-												"type": "AzureBlobFSReadSettings",
-												"recursive": true,
-												"enablePartitionDiscovery": false
-											},
-											"formatSettings": {
-												"type": "JsonReadSettings"
-											}
-										},
-										"sink": {
-											"type": "JsonSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "JsonWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "JSON_ADLS_mhaniffajari",
-											"type": "DatasetReference",
-											"parameters": {
-												"container_name": "hanifcontainers",
-												"folder_name": "json_file",
-												"file_name": "@item()"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "JSON_ADLS_Zakharia",
-											"type": "DatasetReference",
-											"parameters": {
-												"container_name": "development",
-												"folder_name": "json_file",
-												"file_name": "@item()"
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
+				"linkedServiceName": {
+					"referenceName": "ADLS_Zakharia",
+					"type": "LinkedServiceReference"
 				},
-				"variables": {
+				"parameters": {
+					"containar_name": {
+						"type": "string",
+						"defaultValue": "development"
+					},
+					"folder_name": {
+						"type": "string"
+					},
+					"delimeter_name": {
+						"type": "string",
+						"defaultValue": ","
+					},
+					"row_as_header": {
+						"type": "bool",
+						"defaultValue": true
+					},
 					"file_name": {
-						"type": "Array",
-						"defaultValue": [
-							"documents.json",
-							"example_json.json"
-						]
+						"type": "string"
 					}
 				},
 				"folder": {
-					"name": "JSON"
+					"name": "ADLS"
 				},
-				"annotations": []
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file_name",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folder_name",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().containar_name",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": {
+						"value": "@dataset().delimeter_name",
+						"type": "Expression"
+					},
+					"escapeChar": "\\",
+					"firstRowAsHeader": {
+						"value": "@dataset().row_as_header",
+						"type": "Expression"
+					},
+					"quoteChar": "\""
+				},
+				"schema": []
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline7')]",
+			"name": "[concat(parameters('factoryName'), '/JSON_ADLS_Zakharia')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Zakharia",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"container_name": {
+						"type": "string"
+					},
+					"folder_name": {
+						"type": "string"
+					},
+					"file_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file_name",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folder_name",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().container_name",
+							"type": "Expression"
+						}
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/JSON_ADLS_mhaniffajari')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "HanifStorage_Account",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"container_name": {
+						"type": "string"
+					},
+					"folder_name": {
+						"type": "string"
+					},
+					"file_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file_name",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folder_name",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().container_name",
+							"type": "Expression"
+						}
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MongoDB_Hanif')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "MongoDb_Hanif",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"collection_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "MongoDbV2Collection",
+				"schema": [],
+				"typeProperties": {
+					"collection": {
+						"value": "@dataset().collection_name",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MySql_Hanif_DataSets')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "MySQL_Hanif",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"table_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "MySqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": {
+						"value": "@dataset().table_name",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet_adls_zakharia')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Zakharia",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"folder_name": {
+						"type": "string"
+					},
+					"file_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file_name",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folder_name",
+							"type": "Expression"
+						},
+						"fileSystem": "development"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PostgreSql_hanif_adls')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PostgreSql_Hanif",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schema_name": {
+						"type": "string"
+					},
+					"table_name": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "practice Day 5"
+				},
+				"annotations": [],
+				"type": "PostgreSqlV2Table",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema_name",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().table_name",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_DATASET_HANIF')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQL_Hanif",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"table_name": {
+						"type": "string"
+					},
+					"schema_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema_name",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().table_name",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Zakharia')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQL_Zakharia",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schema_name": {
+						"type": "string"
+					},
+					"table_name": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "ADLS"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "CustomerKey",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MaritalStatus",
+						"type": "char"
+					},
+					{
+						"name": "Gender",
+						"type": "char"
+					},
+					{
+						"name": "YearlyIncome",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "Education",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Occupation",
+						"type": "nvarchar"
+					},
+					{
+						"name": "City",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StateProvince",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NumberOfOrders",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TotalQuantity",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TotalAmount",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					}
+				],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema_name",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().table_name",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_Synepss_serverless_Celerates')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SqlServer_Synapse_Celerates",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schema_name": {
+						"type": "string"
+					},
+					"table_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema_name",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().table_name",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_hanif_GCP')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SqlServer_GCP_Hanif",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schema_name": {
+						"type": "string"
+					},
+					"table_name": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "practice Day 5"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema_name",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().table_name",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/csv_adls_zakharia_moviesadls')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Zakharia",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "moviesADLS.csv",
+						"folderPath": "File_Dev",
+						"fileSystem": "development"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "movie",
+						"type": "String"
+					},
+					{
+						"name": "title",
+						"type": "String"
+					},
+					{
+						"name": "genres",
+						"type": "String"
+					},
+					{
+						"name": "year",
+						"type": "String"
+					},
+					{
+						"name": "Rating",
+						"type": "String"
+					},
+					{
+						"name": "Rotton Tomato",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQLLOCALDESKTOPIEQL49O')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Untuk menghubungkan local database ke Linked Services",
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server')]",
+					"database": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "localzakharia",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_Local_')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('SqlServer_Local__properties_typeProperties_server')]",
+					"database": "[parameters('SqlServer_Local__properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('SqlServer_Local__properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SqlServer_Local__password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "localzakharia",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet_Soal_Dua')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Http_Soal_Dua_Challange_Sembilan",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"router": {
+						"type": "string"
+					},
+					"file_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": "@concat(dataset().router,'/',dataset().file_name)"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Soal_Dua')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Lookup_SQL_Hanif",
-						"description": "SQL TO SQL",
+						"name": "Lookup_Periode",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
@@ -131,49 +678,27 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT \n    STRING_AGG(file_name,',') AS concatenated_files\nFROM list_json_file;",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
 							},
 							"dataset": {
-								"referenceName": "SQL_DATASET_HANIF",
+								"referenceName": "CSV_ADLS_ZAKHARIA",
 								"type": "DatasetReference",
 								"parameters": {
-									"table_name": ".",
-									"schema_name": "."
+									"containar_name": "development",
+									"folder_name": "/challangeSembilan/raw/",
+									"delimeter_name": ",",
+									"row_as_header": true,
+									"file_name": "cal_numpy.csv"
 								}
 							}
-						}
-					},
-					{
-						"name": "Set variable1",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "Lookup_SQL_Hanif",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "pipelineReturnValue",
-							"value": [
-								{
-									"key": "File_name",
-									"value": {
-										"type": "Expression",
-										"content": "@split(replace(activity('Lookup_SQL_Hanif').output.firstRow.concatenated_files, '\\', ''), ',')"
-									}
-								}
-							],
-							"setSystemVariable": true
 						}
 					},
 					{
@@ -181,7 +706,7 @@
 						"type": "ForEach",
 						"dependsOn": [
 							{
-								"activity": "Set variable1",
+								"activity": "Lookup_Periode",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -190,12 +715,12 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@split(replace(activity('Lookup_SQL_Hanif').output.firstRow.concatenated_files, '\\', ''), ',')",
+								"value": "@split(activity('Lookup_Periode').output.firstRow.Prop_0,',')",
 								"type": "Expression"
 							},
 							"activities": [
 								{
-									"name": "Transfers ADLS",
+									"name": "CopyParquet",
 									"type": "Copy",
 									"dependsOn": [],
 									"policy": {
@@ -208,75 +733,72 @@
 									"userProperties": [],
 									"typeProperties": {
 										"source": {
-											"type": "JsonSource",
+											"type": "ParquetSource",
 											"storeSettings": {
-												"type": "AzureBlobFSReadSettings",
-												"recursive": true,
-												"enablePartitionDiscovery": false
+												"type": "HttpReadSettings",
+												"requestMethod": "GET"
 											},
 											"formatSettings": {
-												"type": "JsonReadSettings"
+												"type": "ParquetReadSettings"
 											}
 										},
 										"sink": {
-											"type": "JsonSink",
+											"type": "ParquetSink",
 											"storeSettings": {
 												"type": "AzureBlobFSWriteSettings"
 											},
 											"formatSettings": {
-												"type": "JsonWriteSettings"
+												"type": "ParquetWriteSettings"
 											}
 										},
-										"enableStaging": false
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
 									},
 									"inputs": [
 										{
-											"referenceName": "JSON_ADLS_mhaniffajari",
+											"referenceName": "Parquet_Soal_Dua",
 											"type": "DatasetReference",
 											"parameters": {
-												"container_name": "hanifcontainers",
-												"folder_name": "json_file",
-												"file_name": "@item()"
+												"router": "trip-data",
+												"file_name": {
+													"value": "@concat('yellow_tripdata_',item(),'.parquet')",
+													"type": "Expression"
+												}
 											}
 										}
 									],
 									"outputs": [
 										{
-											"referenceName": "JSON_ADLS_Zakharia",
+											"referenceName": "Parquet_adls_zakharia",
 											"type": "DatasetReference",
 											"parameters": {
-												"container_name": "development",
-												"folder_name": "json_file",
-												"file_name": "@item()"
+												"folder_name": "@concat('Cha_Case_9/Task_2/staging/',item())",
+												"file_name": "@concat('yellow_taxi_',item(),'.parquet')"
 											}
 										}
 									]
 								}
 							]
 						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "JSON"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline8')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
+					},
 					{
-						"name": "Lookup_SQL_Hanif",
-						"description": "SQL TO SQL",
-						"type": "Lookup",
-						"dependsOn": [],
+						"name": "Notebook1",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "ForEach1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -286,201 +808,38 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT \n    STRING_AGG(file_name,',') AS concatenated_files\nFROM list_json;",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "SQL_DATASET_HANIF",
-								"type": "DatasetReference",
-								"parameters": {
-									"table_name": ".",
-									"schema_name": "."
-								}
-							}
+							"notebookPath": "/Users/kelompok2@celeratesschooloutlook.onmicrosoft.com/zakharia/ChallangeSembilan/Cha_9_Task_2"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_Zakharia_Kelompok_2",
+							"type": "LinkedServiceReference"
 						}
 					},
 					{
-						"name": "Set variable1",
-						"type": "SetVariable",
+						"name": "Stored procedure1",
+						"type": "SqlServerStoredProcedure",
 						"dependsOn": [
 							{
-								"activity": "Lookup_SQL_Hanif",
+								"activity": "Notebook1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							}
 						],
 						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "pipelineReturnValue",
-							"value": [
-								{
-									"key": "File_name",
-									"value": {
-										"type": "Expression",
-										"content": "@split(replace(activity('Lookup_SQL_Hanif').output.firstRow.concatenated_files, '\\', ''), ',')"
-									}
-								}
-							],
-							"setSystemVariable": true
-						}
-					},
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Set variable1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@split(replace(activity('Lookup_SQL_Hanif').output.firstRow.concatenated_files, '\\', ''), ',')",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Transfers ADLS",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "JsonSource",
-											"storeSettings": {
-												"type": "AzureBlobFSReadSettings",
-												"recursive": true,
-												"enablePartitionDiscovery": false
-											},
-											"formatSettings": {
-												"type": "JsonReadSettings"
-											}
-										},
-										"sink": {
-											"type": "JsonSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "JsonWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "JSON_ADLS_mhaniffajari",
-											"type": "DatasetReference",
-											"parameters": {
-												"container_name": "hanifcontainers",
-												"folder_name": "json_file",
-												"file_name": "@item()"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "JSON_ADLS_Zakharia",
-											"type": "DatasetReference",
-											"parameters": {
-												"container_name": "development",
-												"folder_name": "json_file",
-												"file_name": "@item()"
-											}
-										}
-									]
-								},
-								{
-									"name": "Failed Log",
-									"type": "Script",
-									"dependsOn": [
-										{
-											"activity": "Transfers ADLS",
-											"dependencyConditions": [
-												"Failed"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"linkedServiceName": {
-										"referenceName": "SQL_Zakharia",
-										"type": "LinkedServiceReference"
-									},
-									"typeProperties": {
-										"scripts": [
-											{
-												"type": "Query",
-												"text": {
-													"value": "@concat('INSERT INTO dbo.image_log (image_name, image_url, ingest_tme) VALUES (''', item(), ''', ''failed', ''', GETDATE());')\n",
-													"type": "Expression"
-												}
-											}
-										],
-										"scriptBlockExecutionTimeout": "02:00:00"
-									}
-								},
-								{
-									"name": "Success Log",
-									"type": "Script",
-									"dependsOn": [
-										{
-											"activity": "Transfers ADLS",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"linkedServiceName": {
-										"referenceName": "SQL_Zakharia",
-										"type": "LinkedServiceReference"
-									},
-									"typeProperties": {
-										"scripts": [
-											{
-												"type": "Query",
-												"text": {
-													"value": "@concat('INSERT INTO dbo.image_log (image_name, image_url, ingest_tme) VALUES (''', item(), ''', ''https://storageacchanif.blob.core.windows.net/development/json_file/', item(), ''', GETDATE());')",
-													"type": "Expression"
-												}
-											}
-										],
-										"scriptBlockExecutionTimeout": "02:00:00"
-									}
-								}
-							]
+							"storedProcedureName": "[[dbo].[sp_yellow_taxi_databricks]"
+						},
+						"linkedServiceName": {
+							"referenceName": "SqlServer_Synapse_Celerates",
+							"type": "LinkedServiceReference"
 						}
 					}
 				],
@@ -488,21 +847,24 @@
 					"elapsedTimeMetric": {}
 				},
 				"folder": {
-					"name": "JSON"
+					"name": "Challenge 9"
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/CSV_ADLS_ZAKHARIA')]",
+				"[concat(variables('factoryId'), '/datasets/Parquet_Soal_Dua')]",
+				"[concat(variables('factoryId'), '/datasets/Parquet_adls_zakharia')]"
+			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/example_local_to ADLS')]",
+			"name": "[concat(parameters('factoryName'), '/Soal_Satu')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "AZURA DATA LIKE SERVICE",
 				"activities": [
 					{
-						"name": "Copy data1",
+						"name": "Row MongoDB",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -515,9 +877,451 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
+								"type": "MongoDbV2Source",
+								"batchSize": 100
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "MongoDB_Hanif",
+								"type": "DatasetReference",
+								"parameters": {
+									"collection_name": "documents"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "JSON_ADLS_Zakharia",
+								"type": "DatasetReference",
+								"parameters": {
+									"container_name": "development",
+									"folder_name": {
+										"value": "@concat('/challangeSembilan/raw/json/', formatDateTime(utcnow(), 'yyyyMMdd'))",
+										"type": "Expression"
+									},
+									"file_name": "MongoDB_Hanif.json"
+								}
+							}
+						]
+					},
+					{
+						"name": "Transforms JSON to",
+						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "Row MongoDB",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/kelompok2@celeratesschooloutlook.onmicrosoft.com/zakharia/ChallangeSembilan/Challange_Sembilan"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_Zakharia_Kelompok_2",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Challenge 9"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MongoDB_Hanif')]",
+				"[concat(variables('factoryId'), '/datasets/JSON_ADLS_Zakharia')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StagingADLSsql')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "MySQL to SQL Server Customers",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ADLS Staging Customers",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"additionalColumns": [
+									{
+										"name": "ingest_time",
+										"value": {
+											"value": "@utcnow()",
+											"type": "Expression"
+										}
+									}
+								],
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"customer_id"
+									]
+								},
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_ADLS_ZAKHARIA",
+								"type": "DatasetReference",
+								"parameters": {
+									"containar_name": "development",
+									"folder_name": "@concat('data/customer/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+									"delimeter_name": ",",
+									"row_as_header": true,
+									"file_name": "customer_csv.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQL_Zakharia",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema_name": "dbo",
+									"table_name": "customers"
+								}
+							}
+						]
+					},
+					{
+						"name": "MySQL to SQL Orders",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ADLS Staging Orders",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"additionalColumns": [
+									{
+										"name": "ingest_time",
+										"value": {
+											"value": "@utcnow()",
+											"type": "Expression"
+										}
+									}
+								],
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"order_id"
+									]
+								},
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_ADLS_ZAKHARIA",
+								"type": "DatasetReference",
+								"parameters": {
+									"containar_name": "development",
+									"folder_name": {
+										"value": "@concat('data/orders/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+										"type": "Expression"
+									},
+									"delimeter_name": ",",
+									"row_as_header": true,
+									"file_name": "orders_csv.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQL_Zakharia",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema_name": "dbo",
+									"table_name": "orders"
+								}
+							}
+						]
+					},
+					{
+						"name": "MySQL to SQL Orders Items",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ADLS Staging Orders Details",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"additionalColumns": [
+									{
+										"name": "ingest_time",
+										"value": {
+											"value": "@utcnow()",
+											"type": "Expression"
+										}
+									}
+								],
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"order_id",
+										"order_item_id"
+									]
+								},
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_ADLS_ZAKHARIA",
+								"type": "DatasetReference",
+								"parameters": {
+									"containar_name": "development",
+									"folder_name": {
+										"value": "@concat('data/orders_items/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+										"type": "Expression"
+									},
+									"delimeter_name": ",",
+									"row_as_header": true,
+									"file_name": "ordersItems_csv.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQL_Zakharia",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema_name": "dbo",
+									"table_name": "order_items"
+								}
+							}
+						]
+					},
+					{
+						"name": "fact_customer_rfm",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "MySQL to SQL Server Customers",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "MySQL to SQL Orders",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "MySQL to SQL Orders Items",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": "select * from dbo.viewCustomerOrders",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"customer_id",
+										"month_id"
+									]
+								},
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SQL_Zakharia",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema_name": ".",
+									"table_name": "."
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQL_Zakharia",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema_name": "dbo",
+									"table_name": "fact_customer_rfm"
+								}
+							}
+						]
+					},
+					{
+						"name": "ADLS Staging Customers",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "MySqlSource"
 							},
 							"sink": {
 								"type": "DelimitedTextSink",
@@ -542,11 +1346,10 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "SQL_DESKTOPIEQL49O",
+								"referenceName": "MySql_Hanif_DataSets",
 								"type": "DatasetReference",
 								"parameters": {
-									"schema_database": "HumanResources",
-									"table_database": "Employee"
+									"table_name": "customers"
 								}
 							}
 						],
@@ -556,37 +1359,20 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"containar_name": "development",
-									"folder_name": "data",
+									"folder_name": {
+										"value": "@concat('data/customer/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+										"type": "Expression"
+									},
 									"delimeter_name": ",",
 									"row_as_header": true,
-									"file_name": "Department.csv"
+									"file_name": "customer_csv.csv"
 								}
 							}
 						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "example"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/example_practice_case_1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
+					},
 					{
-						"name": "Extract And Transformation",
-						"description": "ETL",
-						"type": "ExecuteDataFlow",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
+						"name": "ADLS Staging Orders",
+						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -597,35 +1383,144 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"dataflow": {
-								"referenceName": "example_practice_case_1",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
+							"source": {
+								"type": "MySqlSource"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
 								}
 							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "LOAD",
-						"description": "LOAD",
-						"type": "Copy",
-						"dependsOn": [
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
 							{
-								"activity": "Extract And Transformation",
-								"dependencyConditions": [
-									"Succeeded"
-								]
+								"referenceName": "MySql_Hanif_DataSets",
+								"type": "DatasetReference",
+								"parameters": {
+									"table_name": "orders"
+								}
 							}
 						],
+						"outputs": [
+							{
+								"referenceName": "CSV_ADLS_ZAKHARIA",
+								"type": "DatasetReference",
+								"parameters": {
+									"containar_name": "development",
+									"folder_name": {
+										"value": "@concat('data/orders/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+										"type": "Expression"
+									},
+									"delimeter_name": ",",
+									"row_as_header": true,
+									"file_name": "orders_csv.csv"
+								}
+							}
+						]
+					},
+					{
+						"name": "ADLS Staging Orders Details",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "MySqlSource"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "MySql_Hanif_DataSets",
+								"type": "DatasetReference",
+								"parameters": {
+									"table_name": "order_items"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CSV_ADLS_ZAKHARIA",
+								"type": "DatasetReference",
+								"parameters": {
+									"containar_name": "development",
+									"folder_name": {
+										"value": "@concat('data/orders_items/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+										"type": "Expression"
+									},
+									"delimeter_name": ",",
+									"row_as_header": true,
+									"file_name": "ordersItems_csv.csv"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "MySQL"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/CSV_ADLS_ZAKHARIA')]",
+				"[concat(variables('factoryId'), '/datasets/SQL_Zakharia')]",
+				"[concat(variables('factoryId'), '/datasets/MySql_Hanif_DataSets')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "csv_to_sql",
+						"type": "Copy",
+						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -670,7 +1565,7 @@
 									"folder_name": "File_Dev",
 									"delimeter_name": ",",
 									"row_as_header": true,
-									"file_name": "Rating.csv"
+									"file_name": "CustomerOrders.csv"
 								}
 							}
 						],
@@ -680,7 +1575,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"schema_name": "dbo",
-									"table_name": "Ratings"
+									"table_name": "CustomerOrders"
 								}
 							}
 						]
@@ -692,28 +1587,24 @@
 				"folder": {
 					"name": "example"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2024-07-12T06:33:43Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/CSV_ADLS_ZAKHARIA')]",
+				"[concat(variables('factoryId'), '/datasets/SQL_Zakharia')]"
+			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline4')]",
+			"name": "[concat(parameters('factoryName'), '/pipeline10')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "SCD TYPE 1",
-						"description": "Table to Tabel",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Execute Pipeline1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"name": "Lookup_Data-SQL_Hanif",
+						"type": "Lookup",
+						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -725,82 +1616,202 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"additionalColumns": [
-									{
-										"name": "InsertedDate",
-										"value": {
-											"value": "@utcnow()",
-											"type": "Expression"
-										}
-									},
-									{
-										"name": "ModifiedDate",
-										"value": {
-											"value": "@utcnow()",
-											"type": "Expression"
-										}
-									}
-								],
+								"sqlReaderQuery": {
+									"value": "SELECT \n    STRING_AGG(image_name,',') AS concatenated_files\nFROM list_image;",
+									"type": "Expression"
+								},
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
-							"sink": {
-								"type": "SqlServerSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"CustomerID"
-									]
-								},
-								"sqlWriterUseTableLock": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SQL_Zakharia",
+							"dataset": {
+								"referenceName": "SqlServer_hanif_GCP",
 								"type": "DatasetReference",
 								"parameters": {
-									"schema_name": "dbo",
-									"table_name": "CustomerSource"
+									"schema_name": ".",
+									"table_name": "."
 								}
 							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SQL_Zakharia",
-								"type": "DatasetReference",
-								"parameters": {
-									"schema_name": "dbo",
-									"table_name": "DimCustomer"
-								}
-							}
-						]
+						}
 					},
 					{
-						"name": "Execute Pipeline1",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Lookup_Data-SQL_Hanif",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
+							"secureOutput": false,
 							"secureInput": false
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"pipeline": {
-								"referenceName": "pipeline5",
-								"type": "PipelineReference"
+							"variableName": "pipelineReturnValue",
+							"value": [
+								{
+									"key": "file_name",
+									"value": {
+										"type": "Expression",
+										"content": "@split(replace(activity('Lookup_Data-SQL_Hanif').output.firstRow.concatenated_files, '\\', ''), ',')"
+									}
+								}
+							],
+							"setSystemVariable": true
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Set variable1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@split(replace(activity('Lookup_Data-SQL_Hanif').output.firstRow.concatenated_files, '\\', ''), ',')",
+								"type": "Expression"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"activities": [
+								{
+									"name": "GCP TO SQL",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "BinarySource",
+											"storeSettings": {
+												"type": "GoogleCloudStorageReadSettings",
+												"recursive": true,
+												"deleteFilesAfterCompletion": false
+											},
+											"formatSettings": {
+												"type": "BinaryReadSettings"
+											}
+										},
+										"sink": {
+											"type": "BinarySink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "Binary_Hanif_GCO",
+											"type": "DatasetReference",
+											"parameters": {
+												"bucket_Name": "azure_data_engineer",
+												"directory_name": "image",
+												"file_name": {
+													"value": "@concat(item(),'.png')",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Binary_Zakharia_Google",
+											"type": "DatasetReference",
+											"parameters": {
+												"countainer_name": "development",
+												"folder_name": "case_five",
+												"file_name": "@concat(item(),'.png')"
+											}
+										}
+									]
+								},
+								{
+									"name": "success",
+									"type": "Script",
+									"dependsOn": [
+										{
+											"activity": "GCP TO SQL",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"linkedServiceName": {
+										"referenceName": "SQL_Zakharia",
+										"type": "LinkedServiceReference"
+									},
+									"typeProperties": {
+										"scripts": [
+											{
+												"type": "Query",
+												"text": {
+													"value": "@concat('INSERT INTO dbo.list_image (image_name, url_name, provider) VALUES (''', item(), ''', ''https://hanifstorageaccount.blob.core.windows.net/hanifcontainers/image/', item(), '.png'', GETDATE());')\n",
+													"type": "Expression"
+												}
+											}
+										],
+										"scriptBlockExecutionTimeout": "02:00:00"
+									}
+								},
+								{
+									"name": "failed",
+									"type": "Script",
+									"dependsOn": [
+										{
+											"activity": "GCP TO SQL",
+											"dependencyConditions": [
+												"Failed"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"linkedServiceName": {
+										"referenceName": "SQL_Zakharia",
+										"type": "LinkedServiceReference"
+									},
+									"typeProperties": {
+										"scripts": [
+											{
+												"type": "Query",
+												"text": {
+													"value": "@concat('INSERT INTO dbo.image_log (image_name, image_url, provider) VALUES (''', item(), ''', ''https://hanifstorageaccount.blob.core.windows.net/hanifcontainers/image/', item(), ''', ''failed'', GETDATE());')\n",
+													"type": "Expression"
+												}
+											}
+										],
+										"scriptBlockExecutionTimeout": "02:00:00"
+									}
+								}
+							]
 						}
 					}
 				],
@@ -808,11 +1819,13 @@
 					"elapsedTimeMetric": {}
 				},
 				"folder": {
-					"name": "Practice_Case"
+					"name": "Practice Day 5"
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServer_hanif_GCP')]"
+			]
 		}
 	]
 }

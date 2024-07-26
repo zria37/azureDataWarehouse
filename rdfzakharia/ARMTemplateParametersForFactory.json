@@ -8,23 +8,80 @@
 		"ADLS_Zakharia_accountKey": {
 			"value": ""
 		},
-		"SQLLOCALDESKTOPIEQL49O_password": {
+		"AzureDatabricks_Zakharia_Kelompok_2_accessToken": {
 			"value": ""
 		},
-		"SQL_Zakharia_password": {
+		"GoogleCloudStorage_Hanif_secretAccessKey": {
 			"value": ""
 		},
 		"HanifStorage_Account_accountKey": {
 			"value": ""
 		},
+		"MongoDb_Hanif_connectionString": {
+			"value": ""
+		},
+		"MySQL_Hanif_password": {
+			"value": ""
+		},
+		"PostgreSql_Hanif_password": {
+			"value": ""
+		},
+		"SQLLOCALDESKTOPIEQL49O_password": {
+			"value": ""
+		},
 		"SQL_Hanif_password": {
+			"value": ""
+		},
+		"SQL_Zakharia_password": {
+			"value": ""
+		},
+		"SqlServer_GCP_Hanif_password": {
+			"value": ""
+		},
+		"SqlServer_Local__password": {
+			"value": ""
+		},
+		"SqlServer_Synapse_Celerates_password": {
 			"value": ""
 		},
 		"ADLS_Zakharia_properties_typeProperties_url": {
 			"value": "https://storageacczakharia.dfs.core.windows.net/"
 		},
+		"AzureDatabricks_Zakharia_Kelompok_2_properties_typeProperties_existingClusterId": {
+			"value": "0719-043146-nqdj1gvx"
+		},
+		"GoogleCloudStorage_Hanif_properties_typeProperties_accessKeyId": {
+			"value": "GOOGJUP6CZDUHBLCN3JUECIC"
+		},
 		"HTTP_Solliancepublicdata_Customer_properties_typeProperties_url": {
 			"value": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
+		},
+		"HanifStorage_Account_properties_typeProperties_url": {
+			"value": "https://hanifstorageaccount.dfs.core.windows.net/"
+		},
+		"Http_Soal_Dua_Challange_Sembilan_properties_typeProperties_url": {
+			"value": "https://d37ci6vzurychx.cloudfront.net/"
+		},
+		"MongoDb_Hanif_properties_typeProperties_database": {
+			"value": "data"
+		},
+		"MySQL_Hanif_properties_typeProperties_server": {
+			"value": "34.34.222.232"
+		},
+		"MySQL_Hanif_properties_typeProperties_database": {
+			"value": "data"
+		},
+		"MySQL_Hanif_properties_typeProperties_username": {
+			"value": "admin"
+		},
+		"PostgreSql_Hanif_properties_typeProperties_server": {
+			"value": "34.31.255.191"
+		},
+		"PostgreSql_Hanif_properties_typeProperties_database": {
+			"value": "postgres"
+		},
+		"PostgreSql_Hanif_properties_typeProperties_username": {
+			"value": "postgres"
 		},
 		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server": {
 			"value": "DESKTOP-IEQL49O"
@@ -35,6 +92,15 @@
 		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_userName": {
 			"value": "sa"
 		},
+		"SQL_Hanif_properties_typeProperties_server": {
+			"value": "mhaniffajari.database.windows.net"
+		},
+		"SQL_Hanif_properties_typeProperties_database": {
+			"value": "data"
+		},
+		"SQL_Hanif_properties_typeProperties_userName": {
+			"value": "admin_sa"
+		},
 		"SQL_Zakharia_properties_typeProperties_server": {
 			"value": "zakharia.database.windows.net"
 		},
@@ -44,16 +110,31 @@
 		"SQL_Zakharia_properties_typeProperties_userName": {
 			"value": "admin_zakharia"
 		},
-		"HanifStorage_Account_properties_typeProperties_url": {
-			"value": "https://hanifstorageaccount.dfs.core.windows.net/"
+		"SqlServer_GCP_Hanif_properties_typeProperties_server": {
+			"value": "hanifajari.database.windows.net"
 		},
-		"SQL_Hanif_properties_typeProperties_server": {
-			"value": "mhaniffajari.database.windows.net"
+		"SqlServer_GCP_Hanif_properties_typeProperties_database": {
+			"value": "Data"
 		},
-		"SQL_Hanif_properties_typeProperties_database": {
-			"value": "data"
+		"SqlServer_GCP_Hanif_properties_typeProperties_userName": {
+			"value": "admin_sa"
 		},
-		"SQL_Hanif_properties_typeProperties_userName": {
+		"SqlServer_Local__properties_typeProperties_server": {
+			"value": "DESKTOP-IEQL49O"
+		},
+		"SqlServer_Local__properties_typeProperties_database": {
+			"value": "HR_DB"
+		},
+		"SqlServer_Local__properties_typeProperties_userName": {
+			"value": "sa"
+		},
+		"SqlServer_Synapse_Celerates_properties_typeProperties_server": {
+			"value": "celeratessynapse-ondemand.sql.azuresynapse.net"
+		},
+		"SqlServer_Synapse_Celerates_properties_typeProperties_database": {
+			"value": "kelompok_2"
+		},
+		"SqlServer_Synapse_Celerates_properties_typeProperties_userName": {
 			"value": "admin_sa"
 		}
 	}

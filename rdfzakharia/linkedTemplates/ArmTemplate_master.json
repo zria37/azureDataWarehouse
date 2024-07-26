@@ -11,29 +11,105 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS_Zakharia'"
 		},
-		"SQLLOCALDESKTOPIEQL49O_password": {
+		"AzureDatabricks_Zakharia_Kelompok_2_accessToken": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SQLLOCALDESKTOPIEQL49O'"
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_Zakharia_Kelompok_2'"
 		},
-		"SQL_Zakharia_password": {
+		"GoogleCloudStorage_Hanif_secretAccessKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SQL_Zakharia'"
+			"metadata": "Secure string for 'secretAccessKey' of 'GoogleCloudStorage_Hanif'"
 		},
 		"HanifStorage_Account_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'HanifStorage_Account'"
 		},
+		"MongoDb_Hanif_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'MongoDb_Hanif'"
+		},
+		"MySQL_Hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'MySQL_Hanif'"
+		},
+		"PostgreSql_Hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'PostgreSql_Hanif'"
+		},
+		"SQLLOCALDESKTOPIEQL49O_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQLLOCALDESKTOPIEQL49O'"
+		},
 		"SQL_Hanif_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SQL_Hanif'"
+		},
+		"SQL_Zakharia_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQL_Zakharia'"
+		},
+		"SqlServer_GCP_Hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServer_GCP_Hanif'"
+		},
+		"SqlServer_Local__password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServer_Local_'"
+		},
+		"SqlServer_Synapse_Celerates_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServer_Synapse_Celerates'"
 		},
 		"ADLS_Zakharia_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageacczakharia.dfs.core.windows.net/"
 		},
+		"AzureDatabricks_Zakharia_Kelompok_2_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0719-043146-nqdj1gvx"
+		},
+		"GoogleCloudStorage_Hanif_properties_typeProperties_accessKeyId": {
+			"type": "string",
+			"defaultValue": "GOOGJUP6CZDUHBLCN3JUECIC"
+		},
 		"HTTP_Solliancepublicdata_Customer_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
+		},
+		"HanifStorage_Account_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://hanifstorageaccount.dfs.core.windows.net/"
+		},
+		"Http_Soal_Dua_Challange_Sembilan_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://d37ci6vzurychx.cloudfront.net/"
+		},
+		"MongoDb_Hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"MySQL_Hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "34.34.222.232"
+		},
+		"MySQL_Hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"MySQL_Hanif_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "admin"
+		},
+		"PostgreSql_Hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "34.31.255.191"
+		},
+		"PostgreSql_Hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "postgres"
+		},
+		"PostgreSql_Hanif_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "postgres"
 		},
 		"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server": {
 			"type": "string",
@@ -47,6 +123,18 @@
 			"type": "string",
 			"defaultValue": "sa"
 		},
+		"SQL_Hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "mhaniffajari.database.windows.net"
+		},
+		"SQL_Hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"SQL_Hanif_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin_sa"
+		},
 		"SQL_Zakharia_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "zakharia.database.windows.net"
@@ -59,19 +147,39 @@
 			"type": "string",
 			"defaultValue": "admin_zakharia"
 		},
-		"HanifStorage_Account_properties_typeProperties_url": {
+		"SqlServer_GCP_Hanif_properties_typeProperties_server": {
 			"type": "string",
-			"defaultValue": "https://hanifstorageaccount.dfs.core.windows.net/"
+			"defaultValue": "hanifajari.database.windows.net"
 		},
-		"SQL_Hanif_properties_typeProperties_server": {
+		"SqlServer_GCP_Hanif_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "mhaniffajari.database.windows.net"
+			"defaultValue": "Data"
 		},
-		"SQL_Hanif_properties_typeProperties_database": {
+		"SqlServer_GCP_Hanif_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "data"
+			"defaultValue": "admin_sa"
 		},
-		"SQL_Hanif_properties_typeProperties_userName": {
+		"SqlServer_Local__properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "DESKTOP-IEQL49O"
+		},
+		"SqlServer_Local__properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "HR_DB"
+		},
+		"SqlServer_Local__properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
+		},
+		"SqlServer_Synapse_Celerates_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "celeratessynapse-ondemand.sql.azuresynapse.net"
+		},
+		"SqlServer_Synapse_Celerates_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "kelompok_2"
+		},
+		"SqlServer_Synapse_Celerates_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "admin_sa"
 		},
@@ -105,35 +213,74 @@
 					"ADLS_Zakharia_accountKey": {
 						"value": "[parameters('ADLS_Zakharia_accountKey')]"
 					},
-					"SQL_Zakharia_password": {
-						"value": "[parameters('SQL_Zakharia_password')]"
+					"AzureDatabricks_Zakharia_Kelompok_2_accessToken": {
+						"value": "[parameters('AzureDatabricks_Zakharia_Kelompok_2_accessToken')]"
+					},
+					"GoogleCloudStorage_Hanif_secretAccessKey": {
+						"value": "[parameters('GoogleCloudStorage_Hanif_secretAccessKey')]"
 					},
 					"HanifStorage_Account_accountKey": {
 						"value": "[parameters('HanifStorage_Account_accountKey')]"
 					},
+					"MongoDb_Hanif_connectionString": {
+						"value": "[parameters('MongoDb_Hanif_connectionString')]"
+					},
+					"MySQL_Hanif_password": {
+						"value": "[parameters('MySQL_Hanif_password')]"
+					},
+					"PostgreSql_Hanif_password": {
+						"value": "[parameters('PostgreSql_Hanif_password')]"
+					},
 					"SQL_Hanif_password": {
 						"value": "[parameters('SQL_Hanif_password')]"
 					},
-					"SQLLOCALDESKTOPIEQL49O_password": {
-						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_password')]"
+					"SQL_Zakharia_password": {
+						"value": "[parameters('SQL_Zakharia_password')]"
+					},
+					"SqlServer_GCP_Hanif_password": {
+						"value": "[parameters('SqlServer_GCP_Hanif_password')]"
+					},
+					"SqlServer_Synapse_Celerates_password": {
+						"value": "[parameters('SqlServer_Synapse_Celerates_password')]"
 					},
 					"ADLS_Zakharia_properties_typeProperties_url": {
 						"value": "[parameters('ADLS_Zakharia_properties_typeProperties_url')]"
 					},
+					"AzureDatabricks_Zakharia_Kelompok_2_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_Zakharia_Kelompok_2_properties_typeProperties_existingClusterId')]"
+					},
+					"GoogleCloudStorage_Hanif_properties_typeProperties_accessKeyId": {
+						"value": "[parameters('GoogleCloudStorage_Hanif_properties_typeProperties_accessKeyId')]"
+					},
 					"HTTP_Solliancepublicdata_Customer_properties_typeProperties_url": {
 						"value": "[parameters('HTTP_Solliancepublicdata_Customer_properties_typeProperties_url')]"
 					},
-					"SQL_Zakharia_properties_typeProperties_server": {
-						"value": "[parameters('SQL_Zakharia_properties_typeProperties_server')]"
-					},
-					"SQL_Zakharia_properties_typeProperties_database": {
-						"value": "[parameters('SQL_Zakharia_properties_typeProperties_database')]"
-					},
-					"SQL_Zakharia_properties_typeProperties_userName": {
-						"value": "[parameters('SQL_Zakharia_properties_typeProperties_userName')]"
-					},
 					"HanifStorage_Account_properties_typeProperties_url": {
 						"value": "[parameters('HanifStorage_Account_properties_typeProperties_url')]"
+					},
+					"Http_Soal_Dua_Challange_Sembilan_properties_typeProperties_url": {
+						"value": "[parameters('Http_Soal_Dua_Challange_Sembilan_properties_typeProperties_url')]"
+					},
+					"MongoDb_Hanif_properties_typeProperties_database": {
+						"value": "[parameters('MongoDb_Hanif_properties_typeProperties_database')]"
+					},
+					"MySQL_Hanif_properties_typeProperties_server": {
+						"value": "[parameters('MySQL_Hanif_properties_typeProperties_server')]"
+					},
+					"MySQL_Hanif_properties_typeProperties_database": {
+						"value": "[parameters('MySQL_Hanif_properties_typeProperties_database')]"
+					},
+					"MySQL_Hanif_properties_typeProperties_username": {
+						"value": "[parameters('MySQL_Hanif_properties_typeProperties_username')]"
+					},
+					"PostgreSql_Hanif_properties_typeProperties_server": {
+						"value": "[parameters('PostgreSql_Hanif_properties_typeProperties_server')]"
+					},
+					"PostgreSql_Hanif_properties_typeProperties_database": {
+						"value": "[parameters('PostgreSql_Hanif_properties_typeProperties_database')]"
+					},
+					"PostgreSql_Hanif_properties_typeProperties_username": {
+						"value": "[parameters('PostgreSql_Hanif_properties_typeProperties_username')]"
 					},
 					"SQL_Hanif_properties_typeProperties_server": {
 						"value": "[parameters('SQL_Hanif_properties_typeProperties_server')]"
@@ -144,14 +291,32 @@
 					"SQL_Hanif_properties_typeProperties_userName": {
 						"value": "[parameters('SQL_Hanif_properties_typeProperties_userName')]"
 					},
-					"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server": {
-						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server')]"
+					"SQL_Zakharia_properties_typeProperties_server": {
+						"value": "[parameters('SQL_Zakharia_properties_typeProperties_server')]"
 					},
-					"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_database": {
-						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_database')]"
+					"SQL_Zakharia_properties_typeProperties_database": {
+						"value": "[parameters('SQL_Zakharia_properties_typeProperties_database')]"
 					},
-					"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_userName": {
-						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_userName')]"
+					"SQL_Zakharia_properties_typeProperties_userName": {
+						"value": "[parameters('SQL_Zakharia_properties_typeProperties_userName')]"
+					},
+					"SqlServer_GCP_Hanif_properties_typeProperties_server": {
+						"value": "[parameters('SqlServer_GCP_Hanif_properties_typeProperties_server')]"
+					},
+					"SqlServer_GCP_Hanif_properties_typeProperties_database": {
+						"value": "[parameters('SqlServer_GCP_Hanif_properties_typeProperties_database')]"
+					},
+					"SqlServer_GCP_Hanif_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer_GCP_Hanif_properties_typeProperties_userName')]"
+					},
+					"SqlServer_Synapse_Celerates_properties_typeProperties_server": {
+						"value": "[parameters('SqlServer_Synapse_Celerates_properties_typeProperties_server')]"
+					},
+					"SqlServer_Synapse_Celerates_properties_typeProperties_database": {
+						"value": "[parameters('SqlServer_Synapse_Celerates_properties_typeProperties_database')]"
+					},
+					"SqlServer_Synapse_Celerates_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer_Synapse_Celerates_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -170,11 +335,55 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"SQLLOCALDESKTOPIEQL49O_password": {
+						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_password')]"
+					},
+					"SqlServer_Local__password": {
+						"value": "[parameters('SqlServer_Local__password')]"
+					},
+					"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server": {
+						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_server')]"
+					},
+					"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_database": {
+						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_database')]"
+					},
+					"SQLLOCALDESKTOPIEQL49O_properties_typeProperties_userName": {
+						"value": "[parameters('SQLLOCALDESKTOPIEQL49O_properties_typeProperties_userName')]"
+					},
+					"SqlServer_Local__properties_typeProperties_server": {
+						"value": "[parameters('SqlServer_Local__properties_typeProperties_server')]"
+					},
+					"SqlServer_Local__properties_typeProperties_database": {
+						"value": "[parameters('SqlServer_Local__properties_typeProperties_database')]"
+					},
+					"SqlServer_Local__properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer_Local__properties_typeProperties_userName')]"
 					}
 				}
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'rdfzakharia_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "rdfzakharia_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'rdfzakharia_ArmTemplate_1')]"
 			]
 		}
 	]
