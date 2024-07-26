@@ -32,8 +32,8 @@
 						"parameters": {
 							"containar_name": "development",
 							"folder_name": "/challangeSembilan/raw/",
-							"delimeter_name": ",",
-							"row_as_header": true,
+							"delimeter_name": ".",
+							"row_as_header": false,
 							"file_name": "cal_numpy.csv"
 						}
 					}
@@ -156,7 +156,14 @@
 			{
 				"name": "Stored procedure1",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Notebook1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
