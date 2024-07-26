@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Extract File dari Web",
-				"type": "Copy",
+				"name": "Lookup_Periode",
+				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -15,7 +15,65 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "CSV_ADLS_ZAKHARIA",
+						"type": "DatasetReference",
+						"parameters": {
+							"containar_name": "development",
+							"folder_name": "/challangeSembilan/raw/",
+							"delimeter_name": ",",
+							"row_as_header": true,
+							"file_name": "cal_numpy.csv"
+						}
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup_Periode",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@split(activity('Lookup_Periode').output.firstRow.Prop_0,',')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "CopyParquet",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"enableStaging": false
+							}
+						}
+					]
 				}
 			}
 		],

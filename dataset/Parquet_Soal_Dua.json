@@ -1,0 +1,27 @@
+{
+	"name": "Parquet_Soal_Dua",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Http_Soal_Dua_Challange_Sembilan",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"router": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "@concat(dataset().router,'/',dataset().file_name)"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
