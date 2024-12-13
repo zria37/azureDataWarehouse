@@ -1,0 +1,30 @@
+{
+	"name": "SQL_DESKTOPIEQL49O",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLLOCALDESKTOPIEQL49O",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"schema_database": {
+				"type": "string"
+			},
+			"table_database": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schema_database",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().table_database",
+				"type": "Expression"
+			}
+		}
+	}
+}

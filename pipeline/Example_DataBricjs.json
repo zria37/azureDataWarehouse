@@ -1,0 +1,31 @@
+{
+	"name": "Example_DataBricjs",
+	"properties": {
+		"activities": [
+			{
+				"name": "Notebook_Example",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/kelompok2@celeratesschooloutlook.onmicrosoft.com/zakharia/Introduction to Microsoft Azure Databricks/Practice_Case_Day_6"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_Zakharia_Kelompok_2",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Data Bricks"
+		},
+		"annotations": []
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"name": "GoogleCloudStorage_Hanif",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "access key: GOOGJUP6CZDUHBLCN3JUECIC\nsecret: rjRXq12P3iS0ixzu3GE8KzM+A4ZBSy/sY/fAFdVl\nBucket: azure_data_engineer\nFolder : image\nFile Name : depends on list image\n",
+		"annotations": [],
+		"type": "GoogleCloudStorage",
+		"typeProperties": {
+			"serviceUrl": "https://storage.googleapis.com",
+			"accessKeyId": "GOOGJUP6CZDUHBLCN3JUECIC",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDJGQUU4QjY4LTA2OTQtNEUxNC1BOERELUVDNkJEQjgyMjE2N18yNDNmZmVhMi1kYTNhLTQ2ODctOTc0OC1iOWMwYTEyMGQzYzMiDQp9"
+		}
+	}
+}

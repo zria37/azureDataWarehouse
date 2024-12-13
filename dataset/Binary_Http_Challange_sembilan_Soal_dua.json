@@ -1,0 +1,25 @@
+{
+	"name": "Binary_Http_Challange_sembilan_Soal_dua",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Http_Soal_Dua_Challange_Sembilan",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"url_alternative": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@dataset().url_alternative",
+					"type": "Expression"
+				}
+			}
+		}
+	}
+}

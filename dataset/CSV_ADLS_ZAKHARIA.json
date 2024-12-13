@@ -1,0 +1,63 @@
+{
+	"name": "CSV_ADLS_ZAKHARIA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_Zakharia",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"containar_name": {
+				"type": "string",
+				"defaultValue": "development"
+			},
+			"folder_name": {
+				"type": "string"
+			},
+			"delimeter_name": {
+				"type": "string",
+				"defaultValue": ","
+			},
+			"row_as_header": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "ADLS"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folder_name",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().containar_name",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": {
+				"value": "@dataset().delimeter_name",
+				"type": "Expression"
+			},
+			"escapeChar": "\\",
+			"firstRowAsHeader": {
+				"value": "@dataset().row_as_header",
+				"type": "Expression"
+			},
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

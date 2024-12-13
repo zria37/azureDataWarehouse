@@ -1,0 +1,23 @@
+{
+	"name": "MySql_Hanif_DataSets",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MySQL_Hanif",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
+		}
+	}
+}
